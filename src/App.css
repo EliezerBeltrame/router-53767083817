@@ -1,5 +1,11 @@
 
 :root {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   --cor-principal: hsl(97, 60%, 35%);
   --azul: var(--cor-principal);
   --azul-escuro: hsl(97, 60%, 25%);
@@ -14,8 +20,15 @@
   box-sizing: border-box;
 }
 
+html {
+  min-width: 320px;
+  min-height: 100%;
+}
+
 body {
   margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
   background: var(--fundo);
   color: var(--texto);
   font-family: "Segoe UI", Arial, sans-serif;
