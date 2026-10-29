@@ -10,9 +10,10 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 
 - **RA utilizado:** 53767083817
 - **Tema escolhido:** Horta comunitária
+- **Slug:** `canteiros`
 - **Nome do sistema:** Horta comunitária — Eliezer
 - **Campo com limite de caracteres:** Cultura, com máximo de 30 caracteres.
-- **Visualização:** Tabela com uma coluna para cada campo.
+- **Visualização:** Tabela HTML com uma coluna para cada campo.
 - **Menu:** Barra de navegação no topo, com o nome do sistema à esquerda e os links à direita.
 - **Cor principal:** `hsl(97, 60%, 35%)`, definida a partir do cálculo da RA.
 
