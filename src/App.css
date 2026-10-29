@@ -49,26 +49,25 @@ select {
 
 .navbar {
   min-height: 76px;
-  padding: 0 max(24px, calc((100% - 1120px) / 2));
+  padding: 16px 24px;
   background: var(--branco);
   border-bottom: 1px solid var(--borda);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 35px;
 }
 
 .nome-sistema {
-  color: var(--cor-principal);
-  font-size: 19px;
-  font-weight: 750;
-  white-space: nowrap;
+  margin-right: 20px;
 }
 
 .links-menu {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .links-menu a {
@@ -515,18 +514,13 @@ tbody tr:hover {
 
 @media (max-width: 760px) {
   .navbar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
-    padding: 18px 20px;
-  }
-
-  .nome-sistema {
-    white-space: normal;
+    justify-content: center;
+    padding: 18px 12px;
   }
 
   .links-menu {
     flex-wrap: wrap;
+    justify-content: center;
     gap: 4px;
   }
 

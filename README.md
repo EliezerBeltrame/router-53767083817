@@ -6,16 +6,16 @@ Este projeto foi desenvolvido com React e React Router para gerenciar os canteir
 
 O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros e navegar entre as páginas sem recarregar o site.
 
-## Personalização pelo RA
+## Meus parâmetros
 
 - **RA utilizado:** 53767083817
-- **Tema escolhido:** Horta comunitária
+- **Tema (A):** Horta comunitária
+- **Cálculo de A:** 17 % 20 = 17, correspondente ao tema Horta comunitária.
 - **Slug:** `canteiros`
-- **Nome do sistema:** Horta comunitária — Eliezer
-- **Campo com limite de caracteres:** Cultura, com máximo de 30 caracteres.
-- **Visualização:** Tabela HTML com uma coluna para cada campo.
-- **Menu:** Barra de navegação no topo, com o nome do sistema à esquerda e os links à direita.
-- **Cor principal:** `hsl(97, 60%, 35%)`, definida a partir do cálculo da RA.
+- **Regra do campo (B):** o antepenúltimo dígito do RA é 8. A regra correspondente exige que o campo principal tenha no máximo 30 caracteres e um contador visível.
+- **Visualização (C):** a soma dos dígitos do RA é 55. Como 55 % 6 = 1, a visualização utilizada é uma tabela HTML, com uma coluna para cada campo.
+- **Menu (D):** o quarto dígito contado da direita para a esquerda é 8. Como 8 % 4 = 0, o menu deve ficar horizontal no topo, com os links centralizados.
+- **Cor principal:** os três últimos dígitos do RA são 817. Como 817 % 360 = 97, a cor principal é `hsl(97, 60%, 35%)`.
 
 ## Tecnologias utilizadas
 
@@ -27,33 +27,39 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 
 ## Funcionalidades
 
-- Página inicial com a quantidade de canteiros cadastrados.
-- Formulário para cadastrar canteiros.
-- Campos de cultura, área, estação e responsável.
-- Contador de caracteres no campo Cultura.
-- Mensagem de sucesso após cadastrar um canteiro.
-- Tabela para visualizar os registros.
-- Página para endereços não encontrados (404).
-- Navegação entre páginas com React Router.
+- Página inicial com o nome do sistema, nome do aluno e quantidade de registros.
+- Cadastro de canteiros com os campos cultura, área, estação e responsável.
+- Contador de caracteres no campo Cultura, limitado a 30 caracteres.
+- Validação dos campos obrigatórios e da área informada.
+- Mensagem de sucesso após o cadastro.
+- Visualização dos registros em uma tabela HTML.
+- Página de erro 404 para rotas inexistentes.
+- Navegação entre páginas utilizando React Router.
+- Persistência dos registros com `localStorage`, mantendo os dados após atualizar a página.
+
+## Opcionais implementados
+
+- **O6 — Persistência:** os registros são armazenados no `localStorage` e continuam disponíveis após atualizar a página.
 
 ## Como executar o projeto
 
 1. Instale o Node.js.
 2. Abra a pasta do projeto no terminal.
-3. Instale as dependências:
+3. Execute:
 
    ```bash
    npm install
    ```
 
-4. Inicie o projeto:
+4. Depois, execute:
 
    ```bash
    npm run dev
    ```
 
-5. Abra no navegador o endereço apresentado no terminal.
+5. Abra no navegador o endereço informado pelo terminal.
 
 ## Autor
 
-Eliezer — RA 53767083817
+**Eliezer Santos Beltrame**  
+**RA:** 53767083817
