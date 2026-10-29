@@ -10,15 +10,15 @@ import {
 import Navbar from './components/Navbar'
 import './App.css'
 
-// Home: recebe os registros e a quantidade calculada no App por props.
+// Página inicial: recebe a lista e a quantidade de canteiros.
 function Inicio({ registros, quantidade }) {
-  // Soma a área de todos os canteiros cadastrados.
+  // Soma a área de todos os canteiros.
   const areaTotal = registros.reduce(
     (total, registro) => total + registro.area,
     0,
   )
 
-  // Conta quantas culturas diferentes existem na lista.
+  // Conta quantas culturas diferentes existem.
   const culturasDiferentes = new Set(
     registros.map((registro) => registro.cultura.toLowerCase()),
   ).size
@@ -83,16 +83,16 @@ function Inicio({ registros, quantidade }) {
   )
 }
 
-// Cadastro: recebe a função adicionarRegistro do App por props.
-// Controla os campos, valida os dados e envia o novo canteiro.
+// Página de cadastro: recebe a função que salva o canteiro.
 function Cadastro({ adicionarRegistro }) {
+  // Guarda o que foi digitado em cada campo.
   const [cultura, setCultura] = useState('')
   const [area, setArea] = useState('')
   const [estacao, setEstacao] = useState('Ano todo')
   const [responsavel, setResponsavel] = useState('')
   const navegar = useNavigate()
 
-  // Executa quando o formulário é enviado.
+  // Faz o cadastro quando o botão é clicado.
   function salvarRegistro(event) {
     event.preventDefault()
 
@@ -100,7 +100,7 @@ function Cadastro({ adicionarRegistro }) {
     const responsavelLimpo = responsavel.trim()
     const areaNumerica = Number(area)
 
-    // Confere os campos antes de cadastrar.
+    // Verifica se os campos estão preenchidos corretamente.
     if (
       !culturaLimpa ||
       !area ||
@@ -112,8 +112,7 @@ function Cadastro({ adicionarRegistro }) {
       return
     }
 
-    // Cria um registro com identificador, cultura, área,
-    // estação e responsável.
+    // Junta as informações do novo canteiro.
     const novoCanteiro = {
       id: Date.now(),
       cultura: culturaLimpa,
@@ -122,10 +121,10 @@ function Cadastro({ adicionarRegistro }) {
       responsavel: responsavelLimpo,
     }
 
-    // Chama a função recebida por props para atualizar a lista no App.
+    // Envia o novo canteiro para o App salvar.
     adicionarRegistro(novoCanteiro)
 
-    // Navega para a visualização e envia a mensagem de sucesso pelo state.
+    // Vai para a lista depois de salvar.
     navegar('/canteiros', {
       state: {
         mensagem: 'Canteiro cadastrado com sucesso!',
@@ -218,9 +217,9 @@ function Cadastro({ adicionarRegistro }) {
   )
 }
 
-// Visualização: recebe o título e a lista de registros por props.
-// Também lê a mensagem enviada pelo Cadastro através do state da navegação.
+// Página da lista: recebe o título e os canteiros.
 function Canteiros({ title, registros }) {
+  // Pega a mensagem mostrada depois do cadastro.
   const localizacao = useLocation()
   const mensagem = localizacao.state?.mensagem
 
@@ -252,6 +251,7 @@ function Canteiros({ title, registros }) {
           </div>
         </div>
 
+        {/* Mostra uma mensagem se a lista estiver vazia. */}
         {registros.length === 0 ? (
           <div className="estado-vazio">
             <span>▦</span>
@@ -275,6 +275,7 @@ function Canteiros({ title, registros }) {
               </thead>
 
               <tbody>
+                {/* Passa por todos os canteiros e mostra cada um. */}
                 {registros.map((registro) => (
                   <tr key={registro.id}>
                     <td className="nome-cultura">{registro.cultura}</td>
@@ -296,7 +297,7 @@ function Canteiros({ title, registros }) {
   )
 }
 
-// Página 404: useLocation fornece o caminho que foi digitado.
+// Página de erro: mostra o endereço que não foi encontrado.
 function NaoEncontrado() {
   const localizacao = useLocation()
 
@@ -318,10 +319,9 @@ function NaoEncontrado() {
   )
 }
 
-// App: mantém o estado centralizado, configura as rotas
-// e envia os dados necessários para cada página por props.
+// App: guarda os canteiros e organiza as páginas.
 function App() {
-  // Recupera os canteiros salvos no navegador.
+  // Busca os canteiros salvos no navegador.
   const [canteiros, setCanteiros] = useState(() => {
     const dadosSalvos = localStorage.getItem('canteiros')
 
@@ -333,7 +333,7 @@ function App() {
       }
     }
 
-    // Três registros iniciais de exemplo; um deles contém o RA.
+    // Cria três canteiros de exemplo, incluindo o RA.
     return [
       {
         id: 1,
@@ -359,23 +359,24 @@ function App() {
     ]
   })
 
-  // Salva a lista no localStorage sempre que ela é alterada.
+  // Guarda a lista no navegador sempre que ela muda.
   useEffect(() => {
     localStorage.setItem('canteiros', JSON.stringify(canteiros))
   }, [canteiros])
 
-  // Acrescenta o novo registro sem apagar os que já existem.
+  // Adiciona o novo canteiro sem apagar os anteriores.
   function adicionarRegistro(novoCanteiro) {
     setCanteiros((listaAtual) => [...listaAtual, novoCanteiro])
   }
 
-  // Calcula a quantidade no App e envia esse valor para a Home.
+  // Conta quantos canteiros estão cadastrados.
   const quantidade = canteiros.length
 
   return (
     <div className="aplicacao">
       <Navbar quantidade={quantidade} />
 
+      {/* Define qual página aparece em cada endereço. */}
       <Routes>
         <Route
           path="/"
@@ -407,6 +408,7 @@ function App() {
         <Route path="*" element={<NaoEncontrado />} />
       </Routes>
 
+      {/* Aparece no final de todas as páginas. */}
       <footer className="rodape">
         <span>Horta comunitária</span>
         <span>Eliezer Santos Beltrame — RA 53767083817</span>
