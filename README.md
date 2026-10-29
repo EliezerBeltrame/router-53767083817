@@ -76,7 +76,7 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 
 ### Cadastro de canteiros
 
-![Cadastro de canteiros](docs/02-cadastro.png)
+![Cadastro de canteiros](docs/cadastro.png)
 
 ### Visualização dos canteiros
 
