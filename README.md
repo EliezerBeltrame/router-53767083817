@@ -70,27 +70,25 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 
 ## Evidências do projeto
 
-Adicione abaixo os prints reais do projeto para demonstrar o funcionamento das páginas.
-
 ### Página inicial
 
-*Adicionar print da página inicial.*
+![Página inicial](docs/01-home.png)
 
 ### Cadastro de canteiros
 
-*Adicionar print do formulário de cadastro.*
+![Cadastro de canteiros](docs/02-cadastro.png)
 
 ### Visualização dos canteiros
 
-*Adicionar print da tabela com os registros cadastrados.*
+![Tabela de canteiros](docs/03-canteiros.png)
 
-### Validação do formulário
+### Página de erro 404
 
-*Adicionar print mostrando o contador de caracteres ou a validação do formulário.*
+![Página de erro 404](docs/04-erro404.png)
 
 ## Vídeo de apresentação
 
-**Link do vídeo:** *Adicionar o link do vídeo de até 3 minutos após publicá-lo.*
+**Link do vídeo:** em breve 
 
 O vídeo deve demonstrar o fluxo dos dados funcionando, utilizando `console.log` ou React DevTools, e apresentar uma pequena alteração feita ao vivo durante a gravação.
 
