@@ -14,7 +14,7 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 - **Slug:** `canteiros`
 - **Regra do campo (B):** o antepenúltimo dígito do RA é 8. A regra correspondente exige que o campo principal tenha no máximo 30 caracteres e um contador visível.
 - **Visualização (C):** a soma dos dígitos do RA é 55. Como 55 % 6 = 1, a visualização utilizada é uma tabela HTML, com uma coluna para cada campo.
-- **Menu (D):** o quarto dígito contado da direita para a esquerda é 8. Como 8 % 4 = 0, o menu deve ficar horizontal no topo, com os links centralizados.
+- **Menu (D):** o quarto dígito contado da direita para a esquerda é 8. Como 8 % 4 = 0, o menu fica horizontal no topo, com os links centralizados.
 - **Cor principal:** os três últimos dígitos do RA são 817. Como 817 % 360 = 97, a cor principal é `hsl(97, 60%, 35%)`.
 
 ## Tecnologias utilizadas
@@ -37,6 +37,15 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 - Navegação entre páginas utilizando React Router.
 - Persistência dos registros com `localStorage`, mantendo os dados após atualizar a página.
 
+## Rotas do sistema
+
+| Rota | Página |
+|---|---|
+| `/` | Página inicial |
+| `/canteiros/novo` | Cadastro de canteiros |
+| `/canteiros` | Visualização dos canteiros |
+| `*` | Página de erro 404 |
+
 ## Opcionais implementados
 
 - **O6 — Persistência:** os registros são armazenados no `localStorage` e continuam disponíveis após atualizar a página.
@@ -45,7 +54,7 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 
 1. Instale o Node.js.
 2. Abra a pasta do projeto no terminal.
-3. Execute:
+3. Execute o comando:
 
    ```bash
    npm install
@@ -59,7 +68,33 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 
 5. Abra no navegador o endereço informado pelo terminal.
 
+## Evidências do projeto
+
+Adicione abaixo os prints reais do projeto para demonstrar o funcionamento das páginas.
+
+### Página inicial
+
+*Adicionar print da página inicial.*
+
+### Cadastro de canteiros
+
+*Adicionar print do formulário de cadastro.*
+
+### Visualização dos canteiros
+
+*Adicionar print da tabela com os registros cadastrados.*
+
+### Validação do formulário
+
+*Adicionar print mostrando o contador de caracteres ou a validação do formulário.*
+
+## Vídeo de apresentação
+
+**Link do vídeo:** *Adicionar o link do vídeo de até 3 minutos após publicá-lo.*
+
+O vídeo deve demonstrar o fluxo dos dados funcionando, utilizando `console.log` ou React DevTools, e apresentar uma pequena alteração feita ao vivo durante a gravação.
+
 ## Autor
 
-**Eliezer Santos Beltrame**  
+**Nome:** Eliezer Santos Beltrame  
 **RA:** 53767083817
