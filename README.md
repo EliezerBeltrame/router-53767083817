@@ -1,7 +1,7 @@
-
 # Horta comunitária — Eliezer
 
 ## Descrição
+
 Este projeto foi desenvolvido com React e React Router para gerenciar os canteiros de uma horta comunitária.
 
 O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros e navegar entre as páginas sem recarregar o site.
@@ -14,7 +14,7 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 - **Campo com limite de caracteres:** Cultura, com máximo de 30 caracteres.
 - **Visualização:** Tabela com uma coluna para cada campo.
 - **Menu:** Barra de navegação no topo, com o nome do sistema à esquerda e os links à direita.
-- **Cor principal:** Azul petróleo (`#24566A`).
+- **Cor principal:** `hsl(97, 60%, 35%)`, definida a partir do cálculo da RA.
 
 ## Tecnologias utilizadas
 
@@ -30,8 +30,9 @@ O sistema permite visualizar os canteiros cadastrados, cadastrar novos canteiros
 - Formulário para cadastrar canteiros.
 - Campos de cultura, área, estação e responsável.
 - Contador de caracteres no campo Cultura.
+- Mensagem de sucesso após cadastrar um canteiro.
 - Tabela para visualizar os registros.
-- Página para endereços não encontrados.
+- Página para endereços não encontrados (404).
 - Navegação entre páginas com React Router.
 
 ## Como executar o projeto

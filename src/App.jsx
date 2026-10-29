@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Routes,
   Route,
@@ -10,13 +10,18 @@ import {
 import Navbar from './components/Navbar'
 import './App.css'
 
-// Página inicial: recebe a quantidade e os registros por props.
-function Inicio({ registros }) {
-  const quantidade = registros.length
+// Home: recebe os registros e a quantidade calculada no App por props.
+function Inicio({ registros, quantidade }) {
+  // Soma a área de todos os canteiros cadastrados.
   const areaTotal = registros.reduce(
     (total, registro) => total + registro.area,
     0,
   )
+
+  // Conta quantas culturas diferentes existem na lista.
+  const culturasDiferentes = new Set(
+    registros.map((registro) => registro.cultura.toLowerCase()),
+  ).size
 
   return (
     <main className="container">
@@ -27,6 +32,7 @@ function Inicio({ registros }) {
           Organize seus canteiros, acompanhe as culturas e mantenha
           tudo em um só lugar.
         </p>
+
         <Link className="botao botao-principal" to="/canteiros/novo">
           + Cadastrar canteiro
         </Link>
@@ -50,11 +56,7 @@ function Inicio({ registros }) {
         <article className="cartao-resumo">
           <span className="icone-resumo">✿</span>
           <p>Culturas diferentes</p>
-          <strong>
-            {new Set(registros.map((registro) =>
-              registro.cultura.toLowerCase(),
-            )).size}
-          </strong>
+          <strong>{culturasDiferentes}</strong>
           <span className="texto-auxiliar">Tipos de cultura registrados</span>
         </article>
       </section>
@@ -81,7 +83,8 @@ function Inicio({ registros }) {
   )
 }
 
-// Cadastro: controla os campos e envia o novo registro ao componente principal.
+// Cadastro: recebe a função adicionarRegistro do App por props.
+// Controla os campos, valida os dados e envia o novo canteiro.
 function Cadastro({ adicionarRegistro }) {
   const [cultura, setCultura] = useState('')
   const [area, setArea] = useState('')
@@ -89,19 +92,45 @@ function Cadastro({ adicionarRegistro }) {
   const [responsavel, setResponsavel] = useState('')
   const navegar = useNavigate()
 
+  // Executa quando o formulário é enviado.
   function salvarRegistro(event) {
     event.preventDefault()
 
-    const novoCanteiro = {
-      id: Date.now(),
-      cultura: cultura.trim(),
-      area: Number(area),
-      estacao,
-      responsavel: responsavel.trim(),
+    const culturaLimpa = cultura.trim()
+    const responsavelLimpo = responsavel.trim()
+    const areaNumerica = Number(area)
+
+    // Confere os campos antes de cadastrar.
+    if (
+      !culturaLimpa ||
+      !area ||
+      !Number.isFinite(areaNumerica) ||
+      areaNumerica <= 0 ||
+      !estacao ||
+      !responsavelLimpo
+    ) {
+      return
     }
 
+    // Cria um registro com identificador, cultura, área,
+    // estação e responsável.
+    const novoCanteiro = {
+      id: Date.now(),
+      cultura: culturaLimpa,
+      area: areaNumerica,
+      estacao,
+      responsavel: responsavelLimpo,
+    }
+
+    // Chama a função recebida por props para atualizar a lista no App.
     adicionarRegistro(novoCanteiro)
-    navegar('/canteiros')
+
+    // Navega para a visualização e envia a mensagem de sucesso pelo state.
+    navegar('/canteiros', {
+      state: {
+        mensagem: 'Canteiro cadastrado com sucesso!',
+      },
+    })
   }
 
   return (
@@ -118,6 +147,7 @@ function Cadastro({ adicionarRegistro }) {
             <label htmlFor="cultura">Cultura</label>
             <input
               id="cultura"
+              name="cultura"
               type="text"
               placeholder="Ex.: Alface"
               value={cultura}
@@ -125,13 +155,16 @@ function Cadastro({ adicionarRegistro }) {
               maxLength={30}
               required
             />
-            <span className="contador">{cultura.length}/30 caracteres</span>
+            <span className="contador">
+              {cultura.length}/30 caracteres
+            </span>
           </div>
 
           <div className="campo">
             <label htmlFor="area">Área (m²)</label>
             <input
               id="area"
+              name="area"
               type="number"
               placeholder="Ex.: 5"
               value={area}
@@ -146,6 +179,7 @@ function Cadastro({ adicionarRegistro }) {
             <label htmlFor="estacao">Estação de cultivo</label>
             <select
               id="estacao"
+              name="estacao"
               value={estacao}
               onChange={(event) => setEstacao(event.target.value)}
               required
@@ -160,6 +194,7 @@ function Cadastro({ adicionarRegistro }) {
             <label htmlFor="responsavel">Responsável</label>
             <input
               id="responsavel"
+              name="responsavel"
               type="text"
               placeholder="Nome do responsável"
               value={responsavel}
@@ -172,6 +207,7 @@ function Cadastro({ adicionarRegistro }) {
             <Link className="botao botao-secundario" to="/canteiros">
               Cancelar
             </Link>
+
             <button className="botao botao-principal" type="submit">
               Salvar canteiro
             </button>
@@ -182,16 +218,27 @@ function Cadastro({ adicionarRegistro }) {
   )
 }
 
-// Visualização: recebe os registros por props e apresenta uma tabela.
-function Canteiros({ registros }) {
+// Visualização: recebe o título e a lista de registros por props.
+// Também lê a mensagem enviada pelo Cadastro através do state da navegação.
+function Canteiros({ title, registros }) {
+  const localizacao = useLocation()
+  const mensagem = localizacao.state?.mensagem
+
   return (
     <main className="container pagina-interna">
+      {mensagem && (
+        <p role="status" className="mensagem-sucesso">
+          {mensagem}
+        </p>
+      )}
+
       <div className="cabecalho-pagina cabecalho-lista">
         <div>
           <span className="etiqueta">GERENCIAMENTO</span>
           <h1>Meus canteiros</h1>
           <p>Consulte as culturas cadastradas na horta comunitária.</p>
         </div>
+
         <Link className="botao botao-principal" to="/canteiros/novo">
           + Novo canteiro
         </Link>
@@ -200,7 +247,7 @@ function Canteiros({ registros }) {
       <section className="cartao-tabela">
         <div className="barra-tabela">
           <div>
-            <h2>Lista de canteiros</h2>
+            <h2>{title}</h2>
             <p>{registros.length} registro(s) encontrado(s)</p>
           </div>
         </div>
@@ -210,6 +257,7 @@ function Canteiros({ registros }) {
             <span>▦</span>
             <h2>Nenhum canteiro cadastrado</h2>
             <p>Comece adicionando o primeiro canteiro da sua horta.</p>
+
             <Link className="botao botao-principal" to="/canteiros/novo">
               Cadastrar primeiro canteiro
             </Link>
@@ -225,6 +273,7 @@ function Canteiros({ registros }) {
                   <th>Responsável</th>
                 </tr>
               </thead>
+
               <tbody>
                 {registros.map((registro) => (
                   <tr key={registro.id}>
@@ -247,7 +296,7 @@ function Canteiros({ registros }) {
   )
 }
 
-// Página de erro: usa useLocation para mostrar o endereço acessado.
+// Página 404: useLocation fornece o caminho que foi digitado.
 function NaoEncontrado() {
   const localizacao = useLocation()
 
@@ -257,8 +306,10 @@ function NaoEncontrado() {
         <span className="numero-erro">404</span>
         <h1>Página não encontrada</h1>
         <p>
-          Não encontramos o endereço <strong>{localizacao.pathname}</strong>.
+          Não encontramos o endereço{' '}
+          <strong>{localizacao.pathname}</strong>.
         </p>
+
         <Link className="botao botao-principal" to="/">
           Voltar ao início
         </Link>
@@ -267,57 +318,98 @@ function NaoEncontrado() {
   )
 }
 
-// Componente principal: mantém os registros e compartilha os dados com as páginas.
+// App: mantém o estado centralizado, configura as rotas
+// e envia os dados necessários para cada página por props.
 function App() {
-  const [canteiros, setCanteiros] = useState([
-    {
-      id: 1,
-      cultura: 'Alface',
-      area: 5,
-      estacao: 'Ano todo',
-      responsavel: 'Maria',
-    },
-    {
-      id: 2,
-      cultura: 'Tomate',
-      area: 8,
-      estacao: 'Verão',
-      responsavel: 'João',
-    },
-    {
-      id: 3,
-      cultura: 'Cenoura',
-      area: 4,
-      estacao: 'Inverno',
-      responsavel: 'RA 53767083817',
-    },
-  ])
+  // Recupera os canteiros salvos no navegador.
+  const [canteiros, setCanteiros] = useState(() => {
+    const dadosSalvos = localStorage.getItem('canteiros')
 
-  // Adiciona o registro sem apagar os canteiros existentes.
+    if (dadosSalvos) {
+      try {
+        return JSON.parse(dadosSalvos)
+      } catch {
+        localStorage.removeItem('canteiros')
+      }
+    }
+
+    // Três registros iniciais de exemplo; um deles contém o RA.
+    return [
+      {
+        id: 1,
+        cultura: 'Alface',
+        area: 5,
+        estacao: 'Ano todo',
+        responsavel: 'Maria',
+      },
+      {
+        id: 2,
+        cultura: 'Tomate',
+        area: 8,
+        estacao: 'Verão',
+        responsavel: 'João',
+      },
+      {
+        id: 3,
+        cultura: 'Cenoura',
+        area: 4,
+        estacao: 'Inverno',
+        responsavel: 'RA 53767083817',
+      },
+    ]
+  })
+
+  // Salva a lista no localStorage sempre que ela é alterada.
+  useEffect(() => {
+    localStorage.setItem('canteiros', JSON.stringify(canteiros))
+  }, [canteiros])
+
+  // Acrescenta o novo registro sem apagar os que já existem.
   function adicionarRegistro(novoCanteiro) {
     setCanteiros((listaAtual) => [...listaAtual, novoCanteiro])
   }
 
+  // Calcula a quantidade no App e envia esse valor para a Home.
+  const quantidade = canteiros.length
+
   return (
     <div className="aplicacao">
-      <Navbar quantidade={canteiros.length} />
+      <Navbar quantidade={quantidade} />
 
       <Routes>
-        <Route path="/" element={<Inicio registros={canteiros} />} />
+        <Route
+          path="/"
+          element={
+            <Inicio
+              registros={canteiros}
+              quantidade={quantidade}
+            />
+          }
+        />
+
         <Route
           path="/canteiros/novo"
-          element={<Cadastro adicionarRegistro={adicionarRegistro} />}
+          element={
+            <Cadastro adicionarRegistro={adicionarRegistro} />
+          }
         />
+
         <Route
           path="/canteiros"
-          element={<Canteiros registros={canteiros} />}
+          element={
+            <Canteiros
+              title="Lista de canteiros"
+              registros={canteiros}
+            />
+          }
         />
+
         <Route path="*" element={<NaoEncontrado />} />
       </Routes>
 
       <footer className="rodape">
         <span>Horta comunitária</span>
-        <span>Eliezer — RA 53767083817</span>
+        <span>Eliezer Santos Beltrame — RA 53767083817</span>
       </footer>
     </div>
   )

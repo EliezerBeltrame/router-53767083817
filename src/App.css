@@ -1,7 +1,8 @@
 
 :root {
-  --azul: #24566a;
-  --azul-escuro: #193f4e;
+  --cor-principal: hsl(97, 60%, 35%);
+  --azul: var(--cor-principal);
+  --azul-escuro: hsl(97, 60%, 25%);
   --fundo: #f4f7fa;
   --texto: #243746;
   --cinza: #718096;
@@ -58,7 +59,7 @@ select {
 }
 
 .nome-sistema {
-  color: var(--azul);
+  color: var(--cor-principal);
   font-size: 19px;
   font-weight: 750;
   white-space: nowrap;
@@ -76,13 +77,13 @@ select {
   font-weight: 600;
   padding: 10px 13px;
   border-radius: 8px;
-  transition: 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .links-menu a:hover,
 .links-menu a.active {
-  background: #eaf2f5;
-  color: var(--azul);
+  background: hsl(97, 40%, 92%);
+  color: var(--cor-principal);
 }
 
 /* TÍTULOS */
@@ -113,7 +114,7 @@ p {
 .etiqueta {
   display: inline-block;
   margin-bottom: 13px;
-  color: var(--azul);
+  color: var(--cor-principal);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -126,9 +127,13 @@ p {
   overflow: hidden;
   padding: 42px;
   margin-bottom: 26px;
-  border: 1px solid #dce7ed;
+  border: 1px solid hsl(97, 25%, 85%);
   border-radius: 18px;
-  background: linear-gradient(120deg, #ffffff 40%, #eaf3f6);
+  background: linear-gradient(
+    120deg,
+    #ffffff 40%,
+    hsl(97, 35%, 95%)
+  );
 }
 
 .boas-vindas::after {
@@ -136,7 +141,7 @@ p {
   position: absolute;
   right: 55px;
   top: 20px;
-  color: #d8e8ed;
+  color: hsl(97, 30%, 85%);
   font-size: 125px;
   line-height: 1;
   pointer-events: none;
@@ -190,8 +195,8 @@ p {
   height: 46px;
   margin-bottom: 17px;
   border-radius: 12px;
-  background: #eaf2f5;
-  color: var(--azul);
+  background: hsl(97, 40%, 92%);
+  color: var(--cor-principal);
   font-size: 25px;
 }
 
@@ -244,7 +249,7 @@ p {
 
 .link-destaque {
   display: inline-block;
-  color: var(--azul);
+  color: var(--cor-principal);
   font-weight: 700;
 }
 
@@ -273,7 +278,7 @@ p {
 }
 
 .botao-principal {
-  background: var(--azul);
+  background: var(--cor-principal);
   color: white;
 }
 
@@ -357,8 +362,8 @@ p {
 
 .campo input:focus,
 .campo select:focus {
-  border-color: var(--azul);
-  box-shadow: 0 0 0 3px rgba(36, 86, 106, 0.12);
+  border-color: var(--cor-principal);
+  box-shadow: 0 0 0 3px hsl(97, 60%, 35%, 0.12);
 }
 
 .contador {
@@ -440,10 +445,22 @@ tbody tr:hover {
   display: inline-block;
   padding: 5px 10px;
   border-radius: 7px;
-  background: #eaf2f5;
-  color: var(--azul);
+  background: hsl(97, 40%, 92%);
+  color: var(--cor-principal);
   font-size: 12px;
   font-weight: 700;
+}
+
+/* MENSAGEM DE SUCESSO */
+
+.mensagem-sucesso {
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border: 1px solid hsl(97, 35%, 75%);
+  border-radius: 9px;
+  background: hsl(97, 40%, 94%);
+  color: hsl(97, 60%, 25%);
+  font-weight: 600;
 }
 
 /* ESTADOS VAZIOS E ERRO */
@@ -457,7 +474,7 @@ tbody tr:hover {
 .estado-vazio > span {
   display: block;
   margin-bottom: 12px;
-  color: var(--azul);
+  color: var(--cor-principal);
   font-size: 42px;
 }
 
@@ -469,7 +486,7 @@ tbody tr:hover {
 .numero-erro {
   display: block;
   margin-bottom: 12px;
-  color: var(--azul);
+  color: var(--cor-principal);
   font-size: 80px;
   font-weight: 800;
   line-height: 1.1;
@@ -490,7 +507,7 @@ tbody tr:hover {
 }
 
 .rodape span:first-child {
-  color: var(--azul);
+  color: var(--cor-principal);
   font-weight: 700;
 }
 
