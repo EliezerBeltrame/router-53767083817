@@ -364,8 +364,13 @@ function App() {
     localStorage.setItem('canteiros', JSON.stringify(canteiros))
   }, [canteiros])
 
+ 
   // Adiciona o novo canteiro sem apagar os anteriores.
   function adicionarRegistro(novoCanteiro) {
+    // Mostra os dados recebidos do formulário no console.
+    console.log('Novo canteiro recebido:', novoCanteiro)
+
+    // Adiciona o novo canteiro à lista sem apagar os anteriores.
     setCanteiros((listaAtual) => [...listaAtual, novoCanteiro])
   }
 
